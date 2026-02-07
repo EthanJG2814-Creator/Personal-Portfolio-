@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ethan Guerrero | Biomedical Engineering</title>
+  <meta name="description" content="Ethan Guerrero - Biomedical Engineering Student focused on medical devices and computational biology.">
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Replace with your preferred Google Font if desired -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- ============================================ -->
+  <!-- NAVIGATION BAR - Replace nav links if needed -->
+  <!-- ============================================ -->
+  <header class="header">
+    <nav class="nav container">
+      <a href="#home" class="nav-logo">Ethan Guerrero</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#home" class="nav-link">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <!-- Projects dropdown -->
+        <li class="nav-dropdown">
+          <button class="nav-link nav-dropdown-trigger" id="projectsTrigger" aria-expanded="false" aria-haspopup="true">
+            Projects
+            <svg class="nav-dropdown-icon" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+              <path d="M1 1L6 6L11 1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <ul class="nav-dropdown-menu" id="projectsDropdown">
+            <li><a href="#projects" class="nav-dropdown-link" data-tab="personal">Personal</a></li>
+            <li><a href="#projects" class="nav-dropdown-link" data-tab="school">School</a></li>
+          </ul>
+        </li>
+        <li><a href="#work" class="nav-link">Work Experience</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============================================ -->
+    <!-- HOME / HERO SECTION -->
+    <!-- Replace: profile image src, name, tagline -->
+    <!-- ============================================ -->
+    <section id="home" class="hero">
+      <div class="hero-shape" aria-hidden="true"></div>
+      <div class="hero-content container">
+        <div class="hero-image-wrap">
+          <!-- REPLACE: src with your professional photo path (e.g., images/profile.jpg) -->
+          <img src="https://placehold.co/400x500/e8f4f8/0d7377?text=Ethan+Guerrero" alt="Ethan Guerrero - Professional photo" class="hero-image">
+        </div>
+        <div class="hero-text">
+          <!-- REPLACE: Your name and tagline -->
+          <h1 class="hero-title">Ethan Guerrero</h1>
+          <p class="hero-tagline">Biomedical Engineering Student focused on medical devices and computational biology.</p>
+        </div>
+      </div>
+
+      <!-- Option A: 3 project preview cards - REPLACE image srcs with your project images -->
+      <div class="hero-projects container">
+        <a href="#projects" class="hero-project-card">
+          <img src="https://placehold.co/300x200/e8f4f8/0d7377?text=Project+1" alt="Project 1 preview">
+          <span class="hero-project-label">Project 1</span>
+        </a>
+        <a href="#projects" class="hero-project-card">
+          <img src="https://placehold.co/300x200/e8f4f8/0d7377?text=Project+2" alt="Project 2 preview">
+          <span class="hero-project-label">Project 2</span>
+        </a>
+        <a href="#projects" class="hero-project-card">
+          <img src="https://placehold.co/300x200/e8f4f8/0d7377?text=Project+3" alt="Project 3 preview">
+          <span class="hero-project-label">Project 3</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- ABOUT SECTION -->
+    <!-- Replace: bio text, interests, skills list -->
+    <!-- ============================================ -->
+    <section id="about" class="section about">
+      <div class="container">
+        <h2 class="section-title">About</h2>
+        <div class="about-content">
+          <div class="about-bio">
+            <!-- REPLACE: Your short bio -->
+            <p>I'm a biomedical engineering student passionate about developing technologies that improve patient outcomes. My work spans medical device design, embedded systems, and data-driven approaches to biological problems.</p>
+          </div>
+          <div class="about-details">
+            <div class="about-interests">
+              <h3>Interests</h3>
+              <!-- REPLACE: Your key interests -->
+              <ul>
+                <li>Medical device prototyping</li>
+                <li>Computational biology</li>
+                <li>Signal processing</li>
+                <li>Biomechanics</li>
+              </ul>
+            </div>
+            <div class="about-skills">
+              <h3>Core Skills</h3>
+              <!-- REPLACE: Your skills as tags -->
+              <ul class="skill-tags">
+                <li>Medical devices</li>
+                <li>Embedded systems</li>
+                <li>Biomechanics</li>
+                <li>Data analysis</li>
+                <li>Python</li>
+                <li>MATLAB</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- PROJECTS SECTION -->
+    <!-- Tabbed interface: Personal vs School -->
+    <!-- REPLACE: Project cards with your real projects -->
+    <!-- ============================================ -->
+    <section id="projects" class="section projects">
+      <div class="container">
+        <h2 class="section-title">Projects</h2>
+        <div class="projects-tabs">
+          <button class="projects-tab active" data-tab="personal" aria-selected="true">Personal</button>
+          <button class="projects-tab" data-tab="school" aria-selected="false">School</button>
+        </div>
+
+        <!-- Personal projects panel -->
+        <div class="projects-panel active" id="panel-personal">
+          <div class="projects-grid">
+            <!-- REPLACE: Duplicate this card structure for each project, edit title, description, role, tags -->
+            <article class="project-card">
+              <h3 class="project-title">Portable ECG Monitor</h3>
+              <p class="project-desc">Low-cost wearable ECG device for continuous heart monitoring with Bluetooth data transmission to a mobile app.</p>
+              <p class="project-role"><strong>Role:</strong> Lead designer, firmware developer</p>
+              <ul class="project-tags">
+                <li>C</li>
+                <li>Arduino</li>
+                <li>Signal processing</li>
+              </ul>
+            </article>
+            <article class="project-card">
+              <h3 class="project-title">Gait Analysis Tool</h3>
+              <p class="project-desc">Python application that processes accelerometer data to analyze walking patterns and detect abnormalities.</p>
+              <p class="project-role"><strong>Role:</strong> Sole developer</p>
+              <ul class="project-tags">
+                <li>Python</li>
+                <li>Pandas</li>
+                <li>MATLAB</li>
+              </ul>
+            </article>
+            <article class="project-card">
+              <h3 class="project-title">Prosthetic Sensor Interface</h3>
+              <p class="project-desc">Embedded system that interfaces EMG sensors with prosthetic control logic for improved responsiveness.</p>
+              <p class="project-role"><strong>Role:</strong> Hardware and software integration</p>
+              <ul class="project-tags">
+                <li>Embedded C</li>
+                <li>STM32</li>
+                <li>PCB design</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+
+        <!-- School projects panel -->
+        <div class="projects-panel" id="panel-school">
+          <div class="projects-grid">
+            <!-- REPLACE: Add your school projects here -->
+            <article class="project-card">
+              <h3 class="project-title">Biomedical Signals Lab</h3>
+              <p class="project-desc">Class project analyzing ECG and EEG signals using Fourier transforms and filtering techniques.</p>
+              <p class="project-role"><strong>Role:</strong> Team member, data analysis</p>
+              <ul class="project-tags">
+                <li>MATLAB</li>
+                <li>Signal processing</li>
+              </ul>
+            </article>
+            <article class="project-card">
+              <h3 class="project-title">Tissue Engineering Capstone</h3>
+              <p class="project-desc">Design of a bioreactor system for in vitro tissue growth with automated nutrient delivery.</p>
+              <p class="project-role"><strong>Role:</strong> Mechanical design, CAD</p>
+              <ul class="project-tags">
+                <li>SolidWorks</li>
+                <li>LabVIEW</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- WORK EXPERIENCE SECTION -->
+    <!-- Timeline/cards: REPLACE with your internships, research, jobs -->
+    <!-- ============================================ -->
+    <section id="work" class="section work">
+      <div class="container">
+        <h2 class="section-title">Work Experience</h2>
+        <div class="work-timeline">
+          <!-- REPLACE: Duplicate this block for each position -->
+          <article class="work-card">
+            <div class="work-header">
+              <h3 class="work-title">Biomedical Engineering Intern</h3>
+              <span class="work-org">MedTech Innovations</span>
+            </div>
+            <p class="work-dates">Summer 2024</p>
+            <ul class="work-bullets">
+              <li>Developed prototype software for medical device compliance testing</li>
+              <li>Assisted in design verification of Class II medical equipment</li>
+            </ul>
+          </article>
+          <article class="work-card">
+            <div class="work-header">
+              <h3 class="work-title">Research Assistant</h3>
+              <span class="work-org">University Biomaterials Lab</span>
+            </div>
+            <p class="work-dates">Jan 2024 – May 2024</p>
+            <ul class="work-bullets">
+              <li>Conducted mechanical testing of scaffold materials</li>
+              <li>Documented protocols and analyzed data for publication</li>
+            </ul>
+          </article>
+          <article class="work-card">
+            <div class="work-header">
+              <h3 class="work-title">Lab Technician</h3>
+              <span class="work-org">Campus Bioengineering Lab</span>
+            </div>
+            <p class="work-dates">Fall 2023</p>
+            <ul class="work-bullets">
+              <li>Maintained lab equipment and supported undergraduate research</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================ -->
+    <!-- CONTACT SECTION -->
+    <!-- REPLACE: name, title, email, location, social links -->
+    <!-- ============================================ -->
+    <section id="contact" class="section contact">
+      <div class="container">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-layout">
+          <!-- Business card style info -->
+          <div class="contact-card">
+            <!-- REPLACE: Your contact details -->
+            <h3 class="contact-name">Ethan Guerrero</h3>
+            <p class="contact-title">Biomedical Engineering Student</p>
+            <a href="mailto:ethan.guerrero@email.com" class="contact-email">ethan.guerrero@email.com</a>
+            <p class="contact-location">Your City, State</p>
+            <div class="contact-links">
+              <!-- REPLACE: Your GitHub and LinkedIn URLs -->
+              <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="GitHub">GitHub</a>
+              <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="LinkedIn">LinkedIn</a>
+            </div>
+          </div>
+
+          <!-- Contact form - mailto: or wire up to backend later -->
+          <form class="contact-form" action="mailto:ethan.guerrero@email.com" method="post" enctype="text/plain">
+            <!-- REPLACE: action mailto with your email -->
+            <label for="form-name">Name</label>
+            <input type="text" id="form-name" name="name" required placeholder="Your name">
+            <label for="form-email">Email</label>
+            <input type="email" id="form-email" name="email" required placeholder="your@email.com">
+            <label for="form-message">Message</label>
+            <textarea id="form-message" name="message" rows="4" required placeholder="Your message"></textarea>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Ethan Guerrero. All rights reserved.</p>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
