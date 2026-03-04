@@ -14,6 +14,28 @@
   <div class="stars" id="stars" aria-hidden="true"></div>
   <div class="shooting-stars" id="shooting-stars" aria-hidden="true"></div>
 
+  <!-- Sun (day) and moon (night) - position set by time of day -->
+  <div class="sky-elements" id="sky-elements" aria-hidden="true">
+    <div class="sun" id="sun">
+      <svg class="sun-svg" viewBox="0 0 64 64" aria-hidden="true">
+        <g fill="#FFB300">
+          <path d="M32 32 L28 6 L36 6 Z"/>
+          <path d="M32 32 L28 6 L36 6 Z" transform="rotate(45 32 32)"/>
+          <path d="M32 32 L28 6 L36 6 Z" transform="rotate(90 32 32)"/>
+          <path d="M32 32 L28 6 L36 6 Z" transform="rotate(135 32 32)"/>
+          <path d="M32 32 L28 6 L36 6 Z" transform="rotate(180 32 32)"/>
+          <path d="M32 32 L28 6 L36 6 Z" transform="rotate(225 32 32)"/>
+          <path d="M32 32 L28 6 L36 6 Z" transform="rotate(270 32 32)"/>
+          <path d="M32 32 L28 6 L36 6 Z" transform="rotate(315 32 32)"/>
+        </g>
+        <circle cx="32" cy="32" r="14" fill="#FFD54F"/>
+      </svg>
+    </div>
+    <div class="moon" id="moon">
+      <div class="moon-phase-mask" id="moon-phase-mask"></div>
+    </div>
+  </div>
+
   <div class="card" id="card">
     <div class="card-inner">
       <!-- Default view: business card -->

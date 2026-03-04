@@ -102,13 +102,14 @@
 })();
 
 /**
- * Time-of-day background: white (day) to black (night), with fade during sunrise/sunset.
+ * Time-of-day background: sky blue (day) to black (night), eggshell card by day.
+ * Sun moves across sky during day; moon moves at night with phase by date.
  * Sunrise 5–7, Day 7–17, Sunset 17–20, Night 20–5 (24h).
  */
 (function () {
   'use strict';
 
-  var DAY_BG = [255, 255, 255];
+  var DAY_BG = [135, 206, 235];   /* sky blue */
   var NIGHT_BG = [18, 18, 22];
   var SUNRISE_START = 5;
   var SUNRISE_END = 7;
@@ -151,19 +152,73 @@
     return rgbString(r, g, b);
   }
 
+  /* Lunar phase 0 = new, 0.5 = full, 1 = new again (29.53-day cycle) */
+  function getLunarPhase(date) {
+    var jd = date.getTime() / 86400000 + 2440587.5;
+    var lunarAge = ((jd - 2451550.1) % 29.530588853 + 29.530588853) % 29.530588853;
+    return lunarAge / 29.530588853;
+  }
+
+  /* Sun position: arc from sunrise (5) to sunset (20), high at solar noon */
+  function getSunPosition(h) {
+    if (h < SUNRISE_START || h >= SUNSET_END) return null;
+    var dayLength = SUNSET_END - SUNRISE_START;
+    var t = (h - SUNRISE_START) / dayLength;
+    var left = 10 + 80 * t;
+    var top = 75 - 65 * Math.sin(Math.PI * t);
+    return { left: left, top: top };
+  }
+
+  /* Moon position at night: arc from left (evening) to right (early morning) */
+  function getMoonPosition(h) {
+    if (h >= SUNRISE_END && h < SUNSET_END) return null;
+    var nightT = h >= SUNSET_END ? h - SUNSET_END : h + (24 - SUNSET_END);
+    var totalNight = (24 - SUNSET_END) + SUNRISE_START;
+    if (nightT >= totalNight) nightT -= totalNight;
+    var t = nightT / totalNight;
+    var left = 10 + 80 * t;
+    var top = 75 - 65 * Math.sin(Math.PI * t);
+    return { left: left, top: top };
+  }
+
   function updateBackground() {
     var now = new Date();
     var h = now.getHours() + now.getMinutes() / 60 + now.getSeconds() / 3600;
     var isNight = h >= SUNSET_END || h < SUNRISE_START;
 
     document.documentElement.style.setProperty('--page-bg', getBackgroundColor());
+
     if (isNight) {
+      document.body.classList.remove('day-mode');
       document.body.classList.add('stars-visible');
       createStarsOnce();
       scheduleShootingStar();
+      /* Moon position and phase */
+      var moonPos = getMoonPosition(h);
+      var moon = document.getElementById('moon');
+      var mask = document.getElementById('moon-phase-mask');
+      if (moon && moonPos) {
+        moon.style.left = moonPos.left + '%';
+        moon.style.top = moonPos.top + '%';
+      }
+      if (mask) {
+        var phase = getLunarPhase(now);
+        var maskX = phase <= 0.5 ? 2 * phase * 100 : (2 - 2 * phase) * 100;
+        mask.style.transform = 'translateX(' + maskX + '%)';
+      }
     } else {
+      document.body.classList.add('day-mode');
       document.body.classList.remove('stars-visible');
       cancelShootingStar();
+      /* Sun position (visible during sunrise, day, and sunset 5–20) */
+      var sunPos = getSunPosition(h);
+      var sun = document.getElementById('sun');
+      if (sun) {
+        if (sunPos) {
+          sun.style.left = sunPos.left + '%';
+          sun.style.top = sunPos.top + '%';
+        }
+      }
     }
   }
 
