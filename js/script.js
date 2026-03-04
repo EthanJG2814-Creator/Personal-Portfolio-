@@ -52,6 +52,56 @@
 })();
 
 /**
+ * Card sections: Personal Projects, Academic Projects, About.
+ * Click a nav button -> card expands, only that section title + sub-headings show.
+ * Click the section title -> back to main card.
+ */
+(function () {
+  'use strict';
+
+  var cardEl = document.getElementById('card');
+  var cardMain = document.getElementById('card-main');
+  var navButtons = document.querySelectorAll('.card-nav[data-section]');
+  var backButtons = document.querySelectorAll('.card-back[data-back="main"]');
+  var sectionIds = { about: 'card-section-about', personal: 'card-section-personal', academic: 'card-section-academic' };
+
+  function showMain() {
+    if (cardEl) cardEl.classList.remove('card-expanded');
+    if (cardMain) cardMain.style.display = '';
+    document.querySelectorAll('.card-section').forEach(function (section) {
+      section.setAttribute('aria-hidden', 'true');
+    });
+  }
+
+  function showSection(sectionKey) {
+    var id = sectionIds[sectionKey];
+    if (!id) return;
+    var section = document.getElementById(id);
+    if (!section) return;
+    if (cardEl) cardEl.classList.add('card-expanded');
+    if (cardMain) cardMain.style.display = 'none';
+    document.querySelectorAll('.card-section').forEach(function (s) {
+      s.setAttribute('aria-hidden', s === section ? 'false' : 'true');
+    });
+  }
+
+  navButtons.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      var section = btn.getAttribute('data-section');
+      if (section) showSection(section);
+    });
+  });
+
+  backButtons.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      showMain();
+    });
+  });
+})();
+
+/**
  * Time-of-day background: white (day) to black (night), with fade during sunrise/sunset.
  * Sunrise 5–7, Day 7–17, Sunset 17–20, Night 20–5 (24h).
  */

@@ -11,45 +11,71 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Stars layer: visible only when background is dark, rarely glimmer -->
   <div class="stars" id="stars" aria-hidden="true"></div>
-  <!-- Shooting star layer: rare streak at night -->
   <div class="shooting-stars" id="shooting-stars" aria-hidden="true"></div>
 
-  <!-- ============================================ -->
-  <!-- BUSINESS CARD - Single page -->
-  <!-- Replace photo src, name, title, phone, email, and link URLs below -->
-  <!-- ============================================ -->
-
-  <div class="card">
+  <div class="card" id="card">
     <div class="card-inner">
-      <!-- Left: circular profile photo - REPLACE src with your photo path -->
-      <div class="card-photo-wrap">
-        <img
-          src="https://placehold.co/400x400/ffffff/e8e8e8?text=EG"
-          alt="Ethan Guerrero"
-          class="card-photo"
-        >
+      <!-- Default view: business card -->
+      <div class="card-main" id="card-main">
+        <div class="card-photo-wrap">
+          <img src="https://placehold.co/400x400/ffffff/e8e8e8?text=EG" alt="Ethan Guerrero" class="card-photo">
+        </div>
+        <div class="card-info">
+          <h1 class="card-name">Ethan Guerrero</h1>
+          <p class="card-title">Biomedical Engineer</p>
+          <div class="card-contact">
+            <p class="card-phone">P: 555-555-5555</p>
+            <a href="mailto:ethan.guerrero@email.com" class="card-email">ethan.guerrero@email.com</a>
+          </div>
+          <div class="card-buttons">
+            <a href="#" class="card-link-highlight card-nav" data-section="personal">Personal Projects</a>
+            <a href="#" class="card-link-highlight card-nav" data-section="academic">Academic Projects</a>
+            <a href="#" class="card-link-highlight card-nav" data-section="about">About</a>
+          </div>
+          <p class="card-links">
+            <a href="https://github.com/EthanJG2814-Creator" target="_blank" rel="noopener noreferrer" class="card-link-highlight" aria-label="GitHub">GitHub</a>
+            <span class="card-links-sep"> · </span>
+            <a href="https://www.linkedin.com/in/ethanguerrero2814/" target="_blank" rel="noopener noreferrer" class="card-link-highlight" aria-label="LinkedIn">LinkedIn</a>
+          </p>
+        </div>
       </div>
 
-      <!-- Right: contact information - REPLACE placeholder text -->
-      <div class="card-info">
-        <h1 class="card-name">Ethan Guerrero</h1>
-        <p class="card-title">Biomedical Engineer</p>
-        <div class="card-contact">
-          <p class="card-phone">P: 555-555-5555</p>
-          <a href="mailto:ethan.guerrero@email.com" class="card-email">ethan.guerrero@email.com</a>
+      <!-- Expanded sections: only one visible when opened -->
+      <div class="card-section card-section-about" id="card-section-about" aria-hidden="true">
+        <h2 class="card-section-title card-back" data-back="main">About</h2>
+        <div class="card-section-content">
+          <h3 class="card-subheading">Bio</h3>
+          <p class="card-section-text">Replace with a short bio about yourself.</p>
+          <h3 class="card-subheading">Interests</h3>
+          <p class="card-section-text">Replace with your key interests (e.g. medical devices, computational biology).</p>
+          <h3 class="card-subheading">Skills</h3>
+          <p class="card-section-text">Replace with core skills (e.g. Python, MATLAB, embedded systems).</p>
         </div>
-        <div class="card-buttons">
-          <a href="#" class="card-link-highlight">Personal Projects</a>
-          <a href="#" class="card-link-highlight">Academic Projects</a>
-          <a href="#" class="card-link-highlight">About</a>
+      </div>
+
+      <div class="card-section card-section-personal" id="card-section-personal" aria-hidden="true">
+        <h2 class="card-section-title card-back" data-back="main">Personal Projects</h2>
+        <div class="card-section-content">
+          <h3 class="card-subheading">Project name</h3>
+          <p class="card-section-text">Short description and your role.</p>
+          <h3 class="card-subheading">Project name</h3>
+          <p class="card-section-text">Short description and your role.</p>
+          <h3 class="card-subheading">Project name</h3>
+          <p class="card-section-text">Short description and your role.</p>
         </div>
-        <p class="card-links">
-          <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="card-link-highlight" aria-label="GitHub">GitHub</a>
-          <span class="card-links-sep"> · </span>
-          <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" class="card-link-highlight" aria-label="LinkedIn">LinkedIn</a>
-        </p>
+      </div>
+
+      <div class="card-section card-section-academic" id="card-section-academic" aria-hidden="true">
+        <h2 class="card-section-title card-back" data-back="main">Academic Projects</h2>
+        <div class="card-section-content">
+          <h3 class="card-subheading">Course or project name</h3>
+          <p class="card-section-text">Short description and technologies used.</p>
+          <h3 class="card-subheading">Course or project name</h3>
+          <p class="card-section-text">Short description and technologies used.</p>
+          <h3 class="card-subheading">Capstone / thesis</h3>
+          <p class="card-section-text">Short description and outcomes.</p>
+        </div>
       </div>
     </div>
   </div>
