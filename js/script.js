@@ -125,25 +125,67 @@
       if (!raw) return null;
       var cached = JSON.parse(raw);
       if (Date.now() - cached.fetchedAt > WEATHER_CACHE_MS) return null;
-      return cached.cloudy;
+      return cached;
     } catch (e) {
       return null;
     }
   }
 
-  function setCachedWeather(cloudy) {
+  function setCachedWeather(cloudy, rain, snow, thunder) {
     try {
       localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({
         cloudy: cloudy,
+        rain: rain,
+        snow: snow,
+        thunder: thunder,
         fetchedAt: Date.now()
       }));
     } catch (e) {}
   }
 
+  function applyWeatherEffects(cached) {
+    document.body.classList.toggle('sky-cloudy', cached.cloudy);
+    document.body.classList.toggle('sky-rain', cached.rain);
+    document.body.classList.toggle('sky-snow', cached.snow);
+    document.body.classList.toggle('sky-thunder', cached.thunder);
+    updatePrecipitationParticles(cached.rain, cached.snow);
+  }
+
+  function updatePrecipitationParticles(rain, snow) {
+    var rainEl = document.getElementById('sky-rain');
+    var snowEl = document.getElementById('sky-snow');
+    if (rainEl) {
+      rainEl.innerHTML = '';
+      if (rain) {
+        for (var i = 0; i < 55; i++) {
+          var drop = document.createElement('div');
+          drop.className = 'rain-drop';
+          drop.style.left = Math.random() * 100 + '%';
+          drop.style.animationDuration = (0.6 + Math.random() * 0.5) + 's';
+          drop.style.animationDelay = Math.random() * 0.5 + 's';
+          rainEl.appendChild(drop);
+        }
+      }
+    }
+    if (snowEl) {
+      snowEl.innerHTML = '';
+      if (snow) {
+        for (var j = 0; j < 45; j++) {
+          var flake = document.createElement('div');
+          flake.className = 'snow-flake';
+          flake.style.left = Math.random() * 100 + '%';
+          flake.style.animationDuration = (3 + Math.random() * 4) + 's';
+          flake.style.animationDelay = Math.random() * 2 + 's';
+          snowEl.appendChild(flake);
+        }
+      }
+    }
+  }
+
   function fetchWeatherForClouds() {
     var cached = getCachedWeather();
     if (cached !== null) {
-      document.body.classList.toggle('sky-cloudy', cached);
+      applyWeatherEffects(cached);
       return;
     }
     if (!navigator.geolocation) {
@@ -163,13 +205,13 @@
   }
 
   function fetchWeatherWithCoords(lat, lon) {
-    var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + encodeURIComponent(lat) + '&longitude=' + encodeURIComponent(lon) + '&current=rain,cloud_cover,snowfall,showers,precipitation&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch';
+    var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + encodeURIComponent(lat) + '&longitude=' + encodeURIComponent(lon) + '&current=rain,cloud_cover,snowfall,showers,precipitation,weather_code,precipitation_probability&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch';
     fetch(url)
       .then(function (r) { return r.json(); })
       .then(function (data) {
         var cur = data.current;
         if (!cur) {
-          document.body.classList.remove('sky-cloudy');
+          clearWeatherEffects();
           return;
         }
         var cloudCover = typeof cur.cloud_cover === 'number' ? cur.cloud_cover : 0;
@@ -177,14 +219,23 @@
         var showers = typeof cur.showers === 'number' ? cur.showers : 0;
         var precipitation = typeof cur.precipitation === 'number' ? cur.precipitation : 0;
         var snowfall = typeof cur.snowfall === 'number' ? cur.snowfall : 0;
-        var hasPrecip = rain > 0 || showers > 0 || precipitation > 0 || snowfall > 0;
-        var cloudy = cloudCover >= 40 || hasPrecip;
-        setCachedWeather(cloudy);
-        document.body.classList.toggle('sky-cloudy', cloudy);
+        var weatherCode = typeof cur.weather_code === 'number' ? cur.weather_code : 0;
+        var precipProb = typeof cur.precipitation_probability === 'number' ? cur.precipitation_probability : 0;
+        var hasRain = rain > 0 || showers > 0 || (precipitation > 0 && snowfall === 0);
+        var hasSnow = snowfall > 0;
+        var hasThunder = (weatherCode >= 95 && weatherCode <= 99) || precipProb >= 70;
+        var cloudy = cloudCover >= 40 || hasRain || hasSnow || hasThunder;
+        setCachedWeather(cloudy, hasRain, hasSnow, hasThunder);
+        applyWeatherEffects({ cloudy: cloudy, rain: hasRain, snow: hasSnow, thunder: hasThunder });
       })
       .catch(function () {
-        document.body.classList.remove('sky-cloudy');
+        clearWeatherEffects();
       });
+  }
+
+  function clearWeatherEffects() {
+    document.body.classList.remove('sky-cloudy', 'sky-rain', 'sky-snow', 'sky-thunder');
+    updatePrecipitationParticles(false, false);
   }
 
   function lerp(a, b, t) {
@@ -262,6 +313,7 @@
       document.body.classList.remove('day-mode');
       document.body.classList.remove('sky-cloudy');
       document.body.classList.add('stars-visible');
+      fetchWeatherForClouds();
       createStarsOnce();
       scheduleShootingStar();
       /* Moon position and phase */
