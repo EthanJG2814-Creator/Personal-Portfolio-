@@ -63,7 +63,7 @@
   var cardMain = document.getElementById('card-main');
   var navButtons = document.querySelectorAll('.card-nav[data-section]');
   var backButtons = document.querySelectorAll('.card-back[data-back="main"]');
-  var sectionIds = { about: 'card-section-about', personal: 'card-section-personal', academic: 'card-section-academic' };
+  var sectionIds = { about: 'card-section-about', personal: 'card-section-personal', academic: 'card-section-academic', resume: 'card-section-resume' };
 
   function showMain() {
     if (cardEl) cardEl.classList.remove('card-expanded');
@@ -116,6 +116,76 @@
   var SUNSET_START = 17;
   var SUNSET_END = 20;
   var UPDATE_MS = 60000;
+  var WEATHER_CACHE_KEY = 'portfolio_weather_cache';
+  var WEATHER_CACHE_MS = 60 * 60 * 1000; /* 60 minutes */
+
+  function getCachedWeather() {
+    try {
+      var raw = localStorage.getItem(WEATHER_CACHE_KEY);
+      if (!raw) return null;
+      var cached = JSON.parse(raw);
+      if (Date.now() - cached.fetchedAt > WEATHER_CACHE_MS) return null;
+      return cached.cloudy;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function setCachedWeather(cloudy) {
+    try {
+      localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify({
+        cloudy: cloudy,
+        fetchedAt: Date.now()
+      }));
+    } catch (e) {}
+  }
+
+  function fetchWeatherForClouds() {
+    var cached = getCachedWeather();
+    if (cached !== null) {
+      document.body.classList.toggle('sky-cloudy', cached);
+      return;
+    }
+    if (!navigator.geolocation) {
+      fetchWeatherWithCoords(52.52, 13.41);
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        fetchWeatherWithCoords(position.coords.latitude, position.coords.longitude);
+      },
+      function () {
+        /* Permission denied or unavailable: use default location so weather still loads */
+        fetchWeatherWithCoords(52.52, 13.41);
+      },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+    );
+  }
+
+  function fetchWeatherWithCoords(lat, lon) {
+    var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + encodeURIComponent(lat) + '&longitude=' + encodeURIComponent(lon) + '&current=rain,cloud_cover,snowfall,showers,precipitation&timezone=auto&wind_speed_unit=mph&temperature_unit=fahrenheit&precipitation_unit=inch';
+    fetch(url)
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var cur = data.current;
+        if (!cur) {
+          document.body.classList.remove('sky-cloudy');
+          return;
+        }
+        var cloudCover = typeof cur.cloud_cover === 'number' ? cur.cloud_cover : 0;
+        var rain = typeof cur.rain === 'number' ? cur.rain : 0;
+        var showers = typeof cur.showers === 'number' ? cur.showers : 0;
+        var precipitation = typeof cur.precipitation === 'number' ? cur.precipitation : 0;
+        var snowfall = typeof cur.snowfall === 'number' ? cur.snowfall : 0;
+        var hasPrecip = rain > 0 || showers > 0 || precipitation > 0 || snowfall > 0;
+        var cloudy = cloudCover >= 40 || hasPrecip;
+        setCachedWeather(cloudy);
+        document.body.classList.toggle('sky-cloudy', cloudy);
+      })
+      .catch(function () {
+        document.body.classList.remove('sky-cloudy');
+      });
+  }
 
   function lerp(a, b, t) {
     return Math.round(a + (b - a) * t);
@@ -190,6 +260,7 @@
 
     if (isNight) {
       document.body.classList.remove('day-mode');
+      document.body.classList.remove('sky-cloudy');
       document.body.classList.add('stars-visible');
       createStarsOnce();
       scheduleShootingStar();
@@ -210,6 +281,7 @@
       document.body.classList.add('day-mode');
       document.body.classList.remove('stars-visible');
       cancelShootingStar();
+      fetchWeatherForClouds();
       /* Sun position (visible during sunrise, day, and sunset 5–20) */
       var sunPos = getSunPosition(h);
       var sun = document.getElementById('sun');

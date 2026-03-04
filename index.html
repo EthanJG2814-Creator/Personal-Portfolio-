@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ethan Guerrero</title>
-  <meta name="description" content="Ethan Guerrero - Biomedical Engineer.">
+  <title>[your name here]</title>
+  <meta name="description" content="[your name here] - [your title here].">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,6 +16,14 @@
 
   <!-- Sun (day) and moon (night) - position set by time of day -->
   <div class="sky-elements" id="sky-elements" aria-hidden="true">
+    <div class="sky-clouds" id="sky-clouds" aria-hidden="true">
+      <div class="cloud cloud-1"></div>
+      <div class="cloud cloud-2"></div>
+      <div class="cloud cloud-3"></div>
+      <div class="cloud cloud-4"></div>
+      <div class="cloud cloud-5"></div>
+      <div class="cloud cloud-6"></div>
+    </div>
     <div class="sun" id="sun">
       <svg class="sun-svg" viewBox="0 0 64 64" aria-hidden="true">
         <g fill="#FFB300">
@@ -41,19 +49,20 @@
       <!-- Default view: business card -->
       <div class="card-main" id="card-main">
         <div class="card-photo-wrap">
-          <img src="https://placehold.co/400x400/ffffff/e8e8e8?text=EG" alt="Ethan Guerrero" class="card-photo">
+          <img src="https://placehold.co/400x400/ffffff/e8e8e8?text=PP" alt="Profile picture" class="card-photo">
         </div>
         <div class="card-info">
-          <h1 class="card-name">Ethan Guerrero</h1>
-          <p class="card-title">Biomedical Engineer</p>
+          <h1 class="card-name">[your name here]</h1>
+          <p class="card-title">[your title here]</p>
           <div class="card-contact">
-            <p class="card-phone">P: 555-555-5555</p>
-            <a href="mailto:ethan.guerrero@email.com" class="card-email">ethan.guerrero@email.com</a>
+            <p class="card-phone">Ph: 555-555-5555</p>
+            <a href="mailto:youremailhere@email.com" class="card-email">youremailhere@email.com</a>
           </div>
           <div class="card-buttons">
             <a href="#" class="card-link-highlight card-nav" data-section="personal">Personal Projects</a>
             <a href="#" class="card-link-highlight card-nav" data-section="academic">Academic Projects</a>
             <a href="#" class="card-link-highlight card-nav" data-section="about">About</a>
+            <a href="#" class="card-link-highlight card-nav" data-section="resume">Resume</a>
           </div>
           <p class="card-links">
             <a href="https://github.com/EthanJG2814-Creator" target="_blank" rel="noopener noreferrer" class="card-link-highlight" aria-label="GitHub">GitHub</a>
@@ -65,38 +74,194 @@
 
       <!-- Expanded sections: only one visible when opened -->
       <div class="card-section card-section-about" id="card-section-about" aria-hidden="true">
-        <h2 class="card-section-title card-back" data-back="main">About</h2>
-        <div class="card-section-content">
-          <h3 class="card-subheading">Bio</h3>
-          <p class="card-section-text">Replace with a short bio about yourself.</p>
-          <h3 class="card-subheading">Interests</h3>
-          <p class="card-section-text">Replace with your key interests (e.g. medical devices, computational biology).</p>
-          <h3 class="card-subheading">Skills</h3>
-          <p class="card-section-text">Replace with core skills (e.g. Python, MATLAB, embedded systems).</p>
+        <div class="card-section-header">
+          <a href="#" class="card-back-btn card-back" data-back="main">← Back</a>
+          <h2 class="card-section-title">About</h2>
+        </div>
+        <div class="card-section-content card-section-content--scroll card-section-about-content">
+          <div class="about-photo-wrap">
+            <img src="https://placehold.co/400x400/ffffff/e8e8e8?text=PP" alt="Profile picture" class="about-photo">
+          </div>
+          <div class="about-details">
+            <h3 class="card-subheading">Bio</h3>
+            <p class="card-section-text">Replace with a short bio about yourself.</p>
+
+            <h3 class="card-subheading">Education</h3>
+            <p class="card-section-text">Your degree, institution, and year (e.g. B.S. Biomedical Engineering, University Name, 2025).</p>
+
+            <h3 class="card-subheading">Certification</h3>
+            <p class="card-section-text">List certifications (e.g. CPR, OSHA, or leave as placeholder).</p>
+
+            <h3 class="card-subheading">Interest</h3>
+            <ul class="about-list">
+              <li>Interest one (e.g. medical devices)</li>
+              <li>Interest two (e.g. computational biology)</li>
+              <li>Interest three</li>
+            </ul>
+
+            <h3 class="card-subheading">Skills</h3>
+            <ul class="about-list about-list--skills">
+              <li>Skill one (e.g. Python)</li>
+              <li>Skill two (e.g. MATLAB)</li>
+              <li>Skill three (e.g. embedded systems)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-section card-section-resume" id="card-section-resume" aria-hidden="true">
+        <div class="card-section-header">
+          <a href="#" class="card-back-btn card-back" data-back="main">← Back</a>
+          <h2 class="card-section-title">Resume</h2>
+        </div>
+        <div class="card-section-content card-section-content--scroll">
+          <div class="resume-block">
+            <h3 class="card-subheading">Experience</h3>
+            <p class="resume-item"><strong>Role Title</strong> — Company Name</p>
+            <p class="resume-meta">Date range (e.g. Summer 2024)</p>
+            <p class="card-section-text">Brief description of responsibilities and achievements.</p>
+          </div>
+          <div class="resume-block">
+            <h3 class="card-subheading">Education</h3>
+            <p class="resume-item"><strong>Degree</strong> — Institution</p>
+            <p class="resume-meta">Year or date range</p>
+          </div>
+          <div class="resume-block">
+            <h3 class="card-subheading">Skills</h3>
+            <p class="card-section-text">List key skills (e.g. Python, MATLAB, CAD, signal processing).</p>
+          </div>
         </div>
       </div>
 
       <div class="card-section card-section-personal" id="card-section-personal" aria-hidden="true">
-        <h2 class="card-section-title card-back" data-back="main">Personal Projects</h2>
-        <div class="card-section-content">
-          <h3 class="card-subheading">Project name</h3>
-          <p class="card-section-text">Short description and your role.</p>
-          <h3 class="card-subheading">Project name</h3>
-          <p class="card-section-text">Short description and your role.</p>
-          <h3 class="card-subheading">Project name</h3>
-          <p class="card-section-text">Short description and your role.</p>
+        <div class="card-section-header">
+          <a href="#" class="card-back-btn card-back" data-back="main">← Back</a>
+          <h2 class="card-section-title">Personal Projects</h2>
+        </div>
+        <div class="card-section-content card-section-content--scroll">
+          <div class="project-block">
+            <h3 class="project-name">Project name</h3>
+            <p class="project-timeline">Project timeline (e.g. Jan 2024 – May 2024)</p>
+            <p class="project-description">Project description. Short summary of what you built and your role.</p>
+            <div class="project-figures">
+              <figure class="project-figure">
+                <figcaption>The What?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+What" alt="The What - add your image" />
+              </figure>
+              <figure class="project-figure">
+                <figcaption>The How?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+How" alt="The How - add your image" />
+              </figure>
+              <figure class="project-figure">
+                <figcaption>The Result?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+Result" alt="The Result - add your image" />
+              </figure>
+            </div>
+          </div>
+          <div class="project-block">
+            <h3 class="project-name">Project name</h3>
+            <p class="project-timeline">Project timeline</p>
+            <p class="project-description">Project description.</p>
+            <div class="project-figures">
+              <figure class="project-figure">
+                <figcaption>The What?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+What" alt="The What - add your image" />
+              </figure>
+              <figure class="project-figure">
+                <figcaption>The How?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+How" alt="The How - add your image" />
+              </figure>
+              <figure class="project-figure">
+                <figcaption>The Result?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+Result" alt="The Result - add your image" />
+              </figure>
+            </div>
+          </div>
+          <div class="project-block">
+            <h3 class="project-name">Project name</h3>
+            <p class="project-timeline">Project timeline</p>
+            <p class="project-description">Project description.</p>
+            <div class="project-figures">
+              <figure class="project-figure">
+                <figcaption>The What?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+What" alt="The What - add your image" />
+              </figure>
+              <figure class="project-figure">
+                <figcaption>The How?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+How" alt="The How - add your image" />
+              </figure>
+              <figure class="project-figure">
+                <figcaption>The Result?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+Result" alt="The Result - add your image" />
+              </figure>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="card-section card-section-academic" id="card-section-academic" aria-hidden="true">
-        <h2 class="card-section-title card-back" data-back="main">Academic Projects</h2>
-        <div class="card-section-content">
-          <h3 class="card-subheading">Course or project name</h3>
-          <p class="card-section-text">Short description and technologies used.</p>
-          <h3 class="card-subheading">Course or project name</h3>
-          <p class="card-section-text">Short description and technologies used.</p>
-          <h3 class="card-subheading">Capstone / thesis</h3>
-          <p class="card-section-text">Short description and outcomes.</p>
+        <div class="card-section-header">
+          <a href="#" class="card-back-btn card-back" data-back="main">← Back</a>
+          <h2 class="card-section-title">Academic Projects</h2>
+        </div>
+        <div class="card-section-content card-section-content--scroll">
+          <div class="project-block">
+            <h3 class="project-name">Course or project name</h3>
+            <p class="project-timeline">Project timeline (e.g. Fall 2023)</p>
+            <p class="project-description">Short description and technologies used.</p>
+            <div class="project-figures">
+              <figure class="project-figure">
+                <figcaption>The What?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+What" alt="The What - add your image" />
+              </figure>
+              <figure class="project-figure">
+                <figcaption>The How?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+How" alt="The How - add your image" />
+              </figure>
+              <figure class="project-figure">
+                <figcaption>The Result?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+Result" alt="The Result - add your image" />
+              </figure>
+            </div>
+          </div>
+          <div class="project-block">
+            <h3 class="project-name">Course or project name</h3>
+            <p class="project-timeline">Project timeline</p>
+            <p class="project-description">Short description and technologies used.</p>
+            <div class="project-figures">
+              <figure class="project-figure">
+                <figcaption>The What?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+What" alt="The What - add your image" />
+              </figure>
+              <figure class="project-figure">
+                <figcaption>The How?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+How" alt="The How - add your image" />
+              </figure>
+              <figure class="project-figure">
+                <figcaption>The Result?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+Result" alt="The Result - add your image" />
+              </figure>
+            </div>
+          </div>
+          <div class="project-block">
+            <h3 class="project-name">Capstone / thesis</h3>
+            <p class="project-timeline">Project timeline</p>
+            <p class="project-description">Short description and outcomes.</p>
+            <div class="project-figures">
+              <figure class="project-figure">
+                <figcaption>The What?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+What" alt="The What - add your image" />
+              </figure>
+              <figure class="project-figure">
+                <figcaption>The How?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+How" alt="The How - add your image" />
+              </figure>
+              <figure class="project-figure">
+                <figcaption>The Result?</figcaption>
+                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+Result" alt="The Result - add your image" />
+              </figure>
+            </div>
+          </div>
         </div>
       </div>
     </div>
