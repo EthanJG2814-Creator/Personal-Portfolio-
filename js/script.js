@@ -1,91 +1,177 @@
 /**
- * Ethan Guerrero - Portfolio
- * Minimal JS for: mobile nav toggle, Projects dropdown, project tabs
+ * Business card: tilt toward mouse when cursor is OFF the card; flat when over the card.
  */
-
 (function () {
   'use strict';
 
-  // ========== Mobile nav toggle ==========
-  var navToggle = document.getElementById('navToggle');
-  var navMenu = document.getElementById('navMenu');
+  var card = document.querySelector('.card-inner');
+  if (!card) return;
 
-  if (navToggle && navMenu) {
-    navToggle.addEventListener('click', function () {
-      navMenu.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', navMenu.classList.contains('open'));
-    });
+  var maxTilt = 12;
+  var rect;
+  var centerX, centerY;
 
-    // Close mobile menu when clicking a nav link
-    navMenu.querySelectorAll('.nav-link, .nav-dropdown-link').forEach(function (link) {
-      link.addEventListener('click', function () {
-        navMenu.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      });
-    });
+  function isOverCard(clientX, clientY) {
+    rect = card.getBoundingClientRect();
+    return (
+      clientX >= rect.left &&
+      clientX <= rect.right &&
+      clientY >= rect.top &&
+      clientY <= rect.bottom
+    );
   }
 
-  // ========== Projects dropdown (desktop) ==========
-  var projectsTrigger = document.getElementById('projectsTrigger');
-  var projectsDropdown = document.getElementById('projectsDropdown');
-  var navDropdown = projectsTrigger ? projectsTrigger.closest('.nav-dropdown') : null;
-
-  if (projectsTrigger && navDropdown) {
-    projectsTrigger.addEventListener('click', function (e) {
-      e.preventDefault();
-      navDropdown.classList.toggle('open');
-      projectsTrigger.setAttribute(
-        'aria-expanded',
-        navDropdown.classList.contains('open')
-      );
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function (e) {
-      if (!navDropdown.contains(e.target)) {
-        navDropdown.classList.remove('open');
-        projectsTrigger.setAttribute('aria-expanded', 'false');
-      }
-    });
+  function setTilt(e) {
+    if (isOverCard(e.clientX, e.clientY)) {
+      card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      return;
+    }
+    getRect();
+    var x = e.clientX - centerX;
+    var y = e.clientY - centerY;
+    var w = rect.width / 2;
+    var h = rect.height / 2;
+    var rotateY = (x / w) * maxTilt;
+    var rotateX = -(y / h) * maxTilt;
+    card.style.transform =
+      'rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
   }
 
-  // ========== Project tabs: Personal vs School ==========
-  var tabs = document.querySelectorAll('.projects-tab');
-  var panels = document.querySelectorAll('.projects-panel');
+  function getRect() {
+    rect = card.getBoundingClientRect();
+    centerX = rect.left + rect.width / 2;
+    centerY = rect.top + rect.height / 2;
+  }
 
-  tabs.forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      var tabName = tab.getAttribute('data-tab');
+  function resetTilt() {
+    card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+  }
 
-      // Update tab states
-      tabs.forEach(function (t) {
-        t.classList.remove('active');
-        t.setAttribute('aria-selected', 'false');
-      });
-      tab.classList.add('active');
-      tab.setAttribute('aria-selected', 'true');
+  document.addEventListener('mousemove', setTilt);
+  document.addEventListener('mouseleave', resetTilt);
+})();
 
-      // Update panel visibility
-      panels.forEach(function (panel) {
-        if (panel.id === 'panel-' + tabName) {
-          panel.classList.add('active');
-        } else {
-          panel.classList.remove('active');
-        }
-      });
-    });
-  });
+/**
+ * Time-of-day background: white (day) to black (night), with fade during sunrise/sunset.
+ * Sunrise 5–7, Day 7–17, Sunset 17–20, Night 20–5 (24h).
+ */
+(function () {
+  'use strict';
 
-  // ========== Projects dropdown links: switch to correct tab ==========
-  var dropdownLinks = document.querySelectorAll('.nav-dropdown-link[data-tab]');
+  var DAY_BG = [255, 255, 255];
+  var NIGHT_BG = [18, 18, 22];
+  var SUNRISE_START = 5;
+  var SUNRISE_END = 7;
+  var SUNSET_START = 17;
+  var SUNSET_END = 20;
+  var UPDATE_MS = 60000;
 
-  dropdownLinks.forEach(function (link) {
-    link.addEventListener('click', function (e) {
-      var tabName = link.getAttribute('data-tab');
-      var targetTab = document.querySelector('.projects-tab[data-tab="' + tabName + '"]');
-      if (targetTab) {
-        targetTab.click();
+  function lerp(a, b, t) {
+    return Math.round(a + (b - a) * t);
+  }
+
+  function rgbString(r, g, b) {
+    return 'rgb(' + r + ',' + g + ',' + b + ')';
+  }
+
+  function getBackgroundColor() {
+    var now = new Date();
+    var h = now.getHours() + now.getMinutes() / 60 + now.getSeconds() / 3600;
+    var r, g, b;
+
+    if (h >= SUNRISE_END && h < SUNSET_START) {
+      r = DAY_BG[0];
+      g = DAY_BG[1];
+      b = DAY_BG[2];
+    } else if (h >= SUNSET_END || h < SUNRISE_START) {
+      r = NIGHT_BG[0];
+      g = NIGHT_BG[1];
+      b = NIGHT_BG[2];
+    } else if (h >= SUNRISE_START && h < SUNRISE_END) {
+      var t = (h - SUNRISE_START) / (SUNRISE_END - SUNRISE_START);
+      r = lerp(NIGHT_BG[0], DAY_BG[0], t);
+      g = lerp(NIGHT_BG[1], DAY_BG[1], t);
+      b = lerp(NIGHT_BG[2], DAY_BG[2], t);
+    } else {
+      var tSunset = (h - SUNSET_START) / (SUNSET_END - SUNSET_START);
+      r = lerp(DAY_BG[0], NIGHT_BG[0], tSunset);
+      g = lerp(DAY_BG[1], NIGHT_BG[1], tSunset);
+      b = lerp(DAY_BG[2], NIGHT_BG[2], tSunset);
+    }
+    return rgbString(r, g, b);
+  }
+
+  function updateBackground() {
+    var now = new Date();
+    var h = now.getHours() + now.getMinutes() / 60 + now.getSeconds() / 3600;
+    var isNight = h >= SUNSET_END || h < SUNRISE_START;
+
+    document.documentElement.style.setProperty('--page-bg', getBackgroundColor());
+    if (isNight) {
+      document.body.classList.add('stars-visible');
+      createStarsOnce();
+      scheduleShootingStar();
+    } else {
+      document.body.classList.remove('stars-visible');
+      cancelShootingStar();
+    }
+  }
+
+  var shootingStarTimeout = null;
+
+  function scheduleShootingStar() {
+    if (!document.body.classList.contains('stars-visible')) return;
+    var delay = 18000 + Math.random() * 27000; // 18–45 seconds
+    shootingStarTimeout = setTimeout(function () {
+      showShootingStar();
+      if (document.body.classList.contains('stars-visible')) {
+        scheduleShootingStar();
       }
-    });
-  });
+    }, delay);
+  }
+
+  function cancelShootingStar() {
+    if (shootingStarTimeout) {
+      clearTimeout(shootingStarTimeout);
+      shootingStarTimeout = null;
+    }
+    var container = document.getElementById('shooting-stars');
+    if (container) {
+      while (container.firstChild) container.removeChild(container.firstChild);
+    }
+  }
+
+  function showShootingStar() {
+    var container = document.getElementById('shooting-stars');
+    if (!container) return;
+
+    var streak = document.createElement('div');
+    streak.className = 'shooting-star';
+    streak.style.left = (70 + Math.random() * 25) + '%';
+    streak.style.top = (-5 + Math.random() * 20) + '%';
+    container.appendChild(streak);
+
+    setTimeout(function () {
+      if (streak.parentNode) streak.parentNode.removeChild(streak);
+    }, 1500);
+  }
+
+  function createStarsOnce() {
+    var container = document.getElementById('stars');
+    if (!container || container.querySelector('.star')) return;
+
+    var count = 70;
+    for (var i = 0; i < count; i++) {
+      var star = document.createElement('span');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 12 + 's';
+      star.style.animationDuration = (8 + Math.random() * 6) + 's';
+      container.appendChild(star);
+    }
+  }
+
+  updateBackground();
+  setInterval(updateBackground, UPDATE_MS);
 })();
