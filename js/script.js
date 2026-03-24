@@ -58,12 +58,30 @@
 (function () {
   'use strict';
   var card = document.getElementById('card');
-  var trigger = document.querySelector('.card-easter-egg');
-  if (!card || !trigger) return;
-  trigger.addEventListener('click', function (e) {
-    e.preventDefault();
-    if (card.classList.contains('card-expanded')) return;
-    card.classList.toggle('card-flipped');
+  var triggers = document.querySelectorAll('.card-easter-egg');
+  if (!card || !triggers.length) return;
+  triggers.forEach(function (trigger) {
+    trigger.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (card.classList.contains('card-expanded')) return;
+      card.classList.toggle('card-flipped');
+    });
+  });
+})();
+
+/**
+ * Easter egg: click the moon at night to toggle blood moon.
+ * Moon phase is preserved (handled by moon-phase-mask).
+ */
+(function () {
+  'use strict';
+  var moon = document.getElementById('moon');
+  if (!moon) return;
+  moon.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (document.body.classList.contains('stars-visible')) {
+      moon.classList.toggle('moon-blood');
+    }
   });
 })();
 

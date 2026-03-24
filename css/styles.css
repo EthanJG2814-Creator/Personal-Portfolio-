@@ -348,11 +348,20 @@ body.day-mode .sun {
   box-shadow: inset -4px -4px 8px rgba(0, 0, 0, 0.15), 0 0 20px rgba(255, 255, 255, 0.2);
   overflow: hidden;
   opacity: 0;
-  transition: left 0.5s ease, top 0.5s ease, opacity 1s ease;
+  pointer-events: none;
+  transition: left 0.5s ease, top 0.5s ease, opacity 1s ease, background 0.5s ease, box-shadow 0.5s ease;
 }
 
 body.stars-visible .moon {
   opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Blood moon easter egg - click the moon at night */
+.moon.moon-blood {
+  background: #5c0a0a;
+  box-shadow: inset -4px -4px 8px rgba(0, 0, 0, 0.4), 0 0 24px rgba(139, 0, 0, 0.6), 0 0 40px rgba(100, 0, 0, 0.3);
 }
 
 .moon-phase-mask {
