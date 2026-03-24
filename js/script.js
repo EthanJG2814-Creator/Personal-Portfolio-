@@ -172,6 +172,172 @@
 })();
 
 /**
+ * Portfolio PDF export: layout matches project pages (html2pdf + clone). Order: Bio, Personal, Academic.
+ */
+(function () {
+  'use strict';
+
+  function stripCloneIds(root) {
+    root.querySelectorAll('[id]').forEach(function (el) {
+      el.removeAttribute('id');
+    });
+  }
+
+  function cloneForPdf(node) {
+    if (!node) return null;
+    var c = node.cloneNode(true);
+    stripCloneIds(c);
+    return c;
+  }
+
+  function waitForImages(container) {
+    var imgs = container.querySelectorAll('img');
+    var promises = [];
+    for (var i = 0; i < imgs.length; i++) {
+      var img = imgs[i];
+      if (img.complete) continue;
+      promises.push(
+        new Promise(function (resolve) {
+          img.addEventListener('load', resolve, { once: true });
+          img.addEventListener('error', resolve, { once: true });
+        })
+      );
+    }
+    return promises.length ? Promise.all(promises) : Promise.resolve();
+  }
+
+  function removeExportShell(shell) {
+    if (shell && shell.parentNode) shell.parentNode.removeChild(shell);
+  }
+
+  function exportPortfolioPdf() {
+    var html2pdfFn = typeof window.html2pdf === 'function' ? window.html2pdf : null;
+    if (!html2pdfFn) {
+      window.alert('PDF export could not load. Please refresh and try again.');
+      return;
+    }
+
+    var aboutContent = document.querySelector('#about-panel-about .card-section-about-content');
+    var personalContent = document.querySelector('#about-panel-personal .card-section-content');
+    var academicContent = document.querySelector('#about-panel-academic .card-section-content');
+
+    var shell = document.createElement('div');
+    shell.className = 'portfolio-pdf-export-shell';
+    shell.setAttribute('aria-hidden', 'true');
+
+    var root = document.createElement('div');
+    root.className = 'portfolio-pdf-export-root';
+
+    var title = document.createElement('h1');
+    title.className = 'portfolio-pdf-main-title';
+    title.textContent = 'Portfolio';
+    root.appendChild(title);
+
+    function addSection(heading, contentNode) {
+      var section = document.createElement('section');
+      section.className = 'portfolio-pdf-section';
+      var h2 = document.createElement('h2');
+      h2.className = 'portfolio-pdf-section-title';
+      h2.textContent = heading;
+      section.appendChild(h2);
+      var cloned = cloneForPdf(contentNode);
+      if (cloned) {
+        cloned.classList.remove('card-section-content--scroll');
+        section.appendChild(cloned);
+      }
+      root.appendChild(section);
+    }
+
+    addSection('Bio', aboutContent);
+    addSection('Personal Projects', personalContent);
+    addSection('Academic Projects', academicContent);
+
+    shell.appendChild(root);
+    document.body.appendChild(shell);
+
+    var btn = document.getElementById('portfolio-export-pdf');
+    if (btn) {
+      btn.disabled = true;
+      btn.setAttribute('aria-busy', 'true');
+    }
+
+    function runPdf() {
+      var opt = {
+        margin: [10, 10, 10, 10],
+        filename: 'portfolio.pdf',
+        image: { type: 'jpeg', quality: 0.92 },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          allowTaint: false,
+          logging: false,
+          letterRendering: true,
+          scrollX: 0,
+          scrollY: 0
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['css', 'legacy'], avoid: ['.project-block', 'figure', 'img'] }
+      };
+
+      var worker = html2pdfFn().set(opt).from(root);
+      var savePromise = worker.save();
+      if (!savePromise || typeof savePromise.then !== 'function') {
+        removeExportShell(shell);
+        if (btn) {
+          btn.disabled = false;
+          btn.removeAttribute('aria-busy');
+        }
+        window.alert('PDF export failed to start. Please refresh and try again.');
+        return;
+      }
+      savePromise
+        .then(function () {
+          removeExportShell(shell);
+        })
+        .catch(function () {
+          removeExportShell(shell);
+          window.alert('Could not create the PDF. Try again or check your network connection.');
+        })
+        .then(function () {
+          if (btn) {
+            btn.disabled = false;
+            btn.removeAttribute('aria-busy');
+          }
+        });
+    }
+
+    waitForImages(root)
+      .then(function () {
+        return new Promise(function (resolve) {
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              setTimeout(resolve, 50);
+            });
+          });
+        });
+      })
+      .then(function () {
+        runPdf();
+      })
+      .catch(function () {
+        removeExportShell(shell);
+        if (btn) {
+          btn.disabled = false;
+          btn.removeAttribute('aria-busy');
+        }
+      });
+  }
+
+  var exportBtn = document.getElementById('portfolio-export-pdf');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      exportPortfolioPdf();
+    });
+  }
+})();
+
+/**
  * Time-of-day background: sky blue (day) to black (night), eggshell card by day.
  * Sun moves across sky during day; moon moves at night with phase by date.
  * Sunrise 5–7, Day 7–17, Sunset 17–20, Night 20–5 (24h).

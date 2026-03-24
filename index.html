@@ -80,10 +80,13 @@
       <div class="card-section card-section-about" id="card-section-about" aria-hidden="true">
         <div class="card-section-header card-section-header--tabs">
           <a href="#" class="card-back-btn card-back" data-back="main">← Back</a>
-          <div class="about-tabs" role="tablist">
-            <button type="button" class="about-tab-btn about-tab-active" role="tab" aria-selected="true" data-about-tab="about">About</button>
-            <button type="button" class="about-tab-btn" role="tab" aria-selected="false" data-about-tab="personal">Personal Projects</button>
-            <button type="button" class="about-tab-btn" role="tab" aria-selected="false" data-about-tab="academic">Academic Projects</button>
+          <div class="about-tabs-row">
+            <div class="about-tabs" role="tablist">
+              <button type="button" class="about-tab-btn about-tab-active" role="tab" aria-selected="true" data-about-tab="about">About</button>
+              <button type="button" class="about-tab-btn" role="tab" aria-selected="false" data-about-tab="personal">Personal Projects</button>
+              <button type="button" class="about-tab-btn" role="tab" aria-selected="false" data-about-tab="academic">Academic Projects</button>
+            </div>
+            <button type="button" class="about-export-btn" id="portfolio-export-pdf" aria-label="Export portfolio as PDF">Export</button>
           </div>
         </div>
         <div class="about-panels">
@@ -362,6 +365,7 @@
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="./js/script.js"></script>
 </body>
 </html>

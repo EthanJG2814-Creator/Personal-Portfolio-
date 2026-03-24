@@ -413,10 +413,124 @@ body.stars-visible .moon {
   margin-bottom: 0.75rem;
 }
 
+.about-tabs-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+}
+
 .card-section-header--tabs .about-tabs {
   display: flex;
   align-items: center;
   gap: 0.25rem;
+}
+
+.about-export-btn {
+  padding: 0.4em 1em;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--color-active);
+  border: 1px solid var(--color-active);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+  white-space: nowrap;
+}
+
+.about-export-btn:hover {
+  filter: brightness(1.05);
+}
+
+.about-export-btn:focus-visible {
+  outline: 2px solid var(--color-link);
+  outline-offset: 2px;
+}
+
+.about-export-btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+/* PDF export: shell keeps clone in viewport — html2canvas returns blank if off-screen */
+.portfolio-pdf-export-shell {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  overflow: auto;
+  background: rgba(0, 0, 0, 0.45);
+  -webkit-font-smoothing: antialiased;
+}
+
+.portfolio-pdf-export-root {
+  position: relative;
+  width: 794px;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 28px 36px 40px;
+  background: #ffffff;
+  color: var(--color-text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+}
+
+.portfolio-pdf-export-root .card-section-content--scroll {
+  overflow: visible !important;
+  max-height: none !important;
+  padding-right: 0 !important;
+}
+
+.portfolio-pdf-export-root .card-section-about-content {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: flex-start !important;
+}
+
+.portfolio-pdf-export-root .project-figures {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 0.75rem;
+}
+
+.portfolio-pdf-export-root .project-block {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.portfolio-pdf-main-title {
+  margin: 0 0 1.25rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text);
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: 0.5rem;
+}
+
+.portfolio-pdf-section {
+  margin-bottom: 2rem;
+}
+
+.portfolio-pdf-section:last-child {
+  margin-bottom: 0;
+}
+
+.portfolio-pdf-section-title {
+  margin: 1.5rem 0 1rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-link);
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.portfolio-pdf-section:first-of-type .portfolio-pdf-section-title {
+  margin-top: 0;
 }
 
 .about-tab-btn {
