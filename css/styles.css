@@ -9,6 +9,7 @@
   --color-text-muted: #636e72;
   --color-link: #0d7377;
   --color-link-hover: #095455;
+  --color-active: #2563eb;
   --color-card-bg: #ffffff;
   --color-border: #e0e0e0;
   --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -54,6 +55,7 @@ a:hover {
   z-index: 1;
   width: 100%;
   max-width: 640px;
+  -webkit-perspective: 1200px;
   perspective: 1200px;
   transition: max-width 0.4s ease;
 }
@@ -62,28 +64,110 @@ a:hover {
   max-width: min(900px, 92vw);
 }
 
-/* Card: light blue background, outline, tilt target, prominent shadow */
-/* Card: light blue at night, eggshell white during day */
-.card-inner {
+/* Flip wrapper: rotates 180deg when .card-flipped, so back face is visible */
+.card-flip-wrap {
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  transition: transform 0.55s ease;
+}
+
+.card.card-flipped .card-flip-wrap {
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.card-face-front {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 3rem;
   min-height: 200px;
   padding: 2rem;
+  width: 100%;
   background: var(--color-card-bg);
-  border: 1px solid var(--color-border);
   border-radius: 12px;
+}
+
+.card-face-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
   box-shadow:
     0 2px 4px rgba(0, 0, 0, 0.06),
     0 8px 16px rgba(0, 0, 0, 0.1),
     0 24px 48px rgba(0, 0, 0, 0.12),
     0 48px 96px rgba(0, 0, 0, 0.14);
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
+.card-back-quote {
+  margin: 0;
+  font-size: 1.125rem;
+  font-style: italic;
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Easter egg: click corner of card to flip */
+.card-easter-egg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 5;
+  border-radius: 0 12px 0 0;
+}
+
+.card.card-expanded .card-easter-egg {
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* Card inner: tilt container, no visual styling (faces have it) */
+.card-inner {
+  position: relative;
+  width: 100%;
+  -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
-  transition: transform 0.1s ease-out, filter 1.5s ease, min-height 0.4s ease, background 1.5s ease;
+  transition: transform 0.1s ease-out, filter 1.5s ease;
   will-change: transform;
 }
 
-body.day-mode .card-inner {
+.card-inner .card-flip-wrap .card-face-front {
+  border: 1px solid var(--color-border);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    0 8px 16px rgba(0, 0, 0, 0.1),
+    0 24px 48px rgba(0, 0, 0, 0.12),
+    0 48px 96px rgba(0, 0, 0, 0.14);
+}
+
+body.day-mode .card-inner .card-flip-wrap .card-face-front {
   background: #ffffff;
   border-color: var(--color-border);
 }
@@ -94,8 +178,17 @@ body.day-mode .card-inner {
   gap: 0;
 }
 
+.card.card-expanded .card-inner .card-flip-wrap .card-face-front {
+  min-height: 320px;
+  align-items: flex-start;
+  gap: 0;
+}
+
 /* At night, dim the card so it’s not too bright */
-body.stars-visible .card-inner {
+body.stars-visible .card-face-front {
+  filter: brightness(0.72);
+}
+body.stars-visible .card-face-back {
   filter: brightness(0.72);
 }
 
@@ -307,6 +400,66 @@ body.stars-visible .moon {
   flex-wrap: wrap;
 }
 
+.card-section-header--tabs {
+  margin-bottom: 0.75rem;
+}
+
+.card-section-header--tabs .about-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.about-tab-btn {
+  padding: 0.4em 1em;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.about-tab-btn:hover {
+  color: var(--color-text);
+  border-color: var(--color-link);
+}
+
+.about-tab-btn.about-tab-active {
+  color: #fff;
+  background: var(--color-active);
+  border-color: var(--color-active);
+}
+
+.about-panels {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.about-tab-panel {
+  display: none;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+.about-tab-panel[aria-hidden="false"] {
+  display: flex;
+}
+
+.about-tab-panel .card-section-content--scroll {
+  flex: 1;
+  overflow-y: auto;
+  max-height: none;
+}
+
 .card-back-btn {
   display: inline-flex;
   align-items: center;
@@ -428,6 +581,57 @@ body.stars-visible .moon {
   border: 1px solid var(--color-border);
 }
 
+.project-blurb {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.project-figure-caption {
+  margin: 0.5rem 0 0.35rem;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+}
+
+.project-figure-skills-heading {
+  margin: 0.4rem 0 0.2rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--color-text-muted);
+}
+
+.project-figure-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.project-figure-skills li {
+  position: relative;
+  padding-left: 0.6rem;
+}
+
+.project-figure-skills li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--color-link);
+}
+
+.project-figure-skills li:nth-child(n+4) {
+  display: none;
+}
+
 .card-subheading {
   margin: 1rem 0 0.35rem;
   font-size: 0.9375rem;
@@ -515,6 +719,42 @@ body.stars-visible .moon {
   margin-bottom: 1.25rem;
 }
 
+.resume-pdf-actions {
+  margin-bottom: 1rem;
+}
+
+.resume-download-btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: var(--color-link);
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.resume-download-btn:hover {
+  background: var(--color-link-hover);
+  color: #fff;
+}
+
+.resume-pdf-wrap {
+  width: 100%;
+  height: 70vh;
+  min-height: 400px;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.resume-pdf-iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 .resume-block:last-child {
   margin-bottom: 0;
 }
@@ -544,6 +784,146 @@ body.stars-visible .moon {
 .card-main .card-info {
   flex: 1;
   min-width: 0;
+  text-align: right;
+}
+
+.card-main .card-links-grid {
+  justify-content: flex-end;
+}
+
+.card-contact-icon {
+  margin-right: 0.25rem;
+  opacity: 0.85;
+}
+
+.card-block-heading {
+  margin: 0 0 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Portfolio section: tabs (Personal Projects | Academic Projects) */
+.card-section-portfolio .card-section-header {
+  margin-bottom: 0;
+}
+
+.portfolio-tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 0 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 0.75rem;
+}
+
+.portfolio-tab-btn {
+  padding: 0.4em 1em;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.portfolio-tab-btn:hover {
+  color: var(--color-text);
+}
+
+.portfolio-tab-btn.portfolio-tab-active {
+  color: #fff;
+  background: var(--color-active);
+}
+
+.portfolio-panels {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.portfolio-tab-panel {
+  display: none;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+
+.portfolio-tab-panel[aria-hidden="false"] {
+  display: flex;
+}
+
+.card-highlights {
+  margin-bottom: 1.25rem;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.card-tag {
+  display: inline-block;
+  padding: 0.3em 0.65em;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-link);
+  background: rgba(13, 115, 119, 0.12);
+  border-radius: 999px;
+}
+
+.card-links-section {
+  margin-bottom: 1.25rem;
+}
+
+.card-links-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.card-link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45em 0.75em;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text);
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  text-align: center;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.card-link-btn:hover {
+  border-color: var(--color-link);
+  color: var(--color-link);
+}
+
+.card-link-btn-primary,
+.card-nav.card-nav-active {
+  background: var(--color-active);
+  border-color: var(--color-active);
+  color: #fff;
+}
+
+.card-link-btn-primary:hover,
+.card-nav.card-nav-active:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  color: #fff;
+}
+
+.card-quick-actions-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .card-photo {
@@ -568,10 +948,9 @@ body.stars-visible .moon {
 
 .card-title {
   margin: 0 0 0.5rem;
-  font-size: 1.125rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
   color: var(--color-text-muted);
 }
 
@@ -592,34 +971,9 @@ body.stars-visible .moon {
   color: var(--color-text);
 }
 
-/* Row of highlight links: Personal Projects, Academic Projects, About */
-.card-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.card-buttons .card-link-highlight {
-  margin: 0;
-}
-
-/* Highlight around clickable links (email, GitHub, LinkedIn) */
-.card-link-highlight {
-  display: inline-block;
-  padding: 0.35em 0.65em;
-  margin: 0.15em 0.15em 0.15em 0;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid var(--color-link);
-  border-radius: 6px;
-  font-weight: 500;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-}
-
-.card-link-highlight:hover {
-  background: var(--color-bg);
-  border-color: var(--color-link-hover);
-  box-shadow: 0 2px 6px rgba(13, 115, 119, 0.2);
+/* Quick Actions and Links use .card-link-btn above */
+.card-quick-actions {
+  margin-bottom: 0;
 }
 
 .card-links {
@@ -725,6 +1079,13 @@ body.stars-visible .shooting-stars {
 /* Mobile: stack photo above info, center */
 @media (max-width: 560px) {
   .card-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+  }
+
+  .card-inner .card-flip-wrap .card-face-front {
     flex-direction: column;
     align-items: center;
     text-align: center;

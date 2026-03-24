@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>[your name here]</title>
   <meta name="description" content="[your name here] - [your title here].">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="./css/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -49,65 +49,292 @@
 
   <div class="card" id="card">
     <div class="card-inner">
+      <div class="card-flip-wrap">
+        <div class="card-face card-face-front">
+          <button type="button" class="card-easter-egg" aria-label="Easter egg" title=""></button>
       <!-- Default view: business card -->
       <div class="card-main" id="card-main">
         <div class="card-photo-wrap">
-          <img src="https://placehold.co/400x400/ffffff/e8e8e8?text=PP" alt="Profile picture" class="card-photo">
+          <img src="https://placehold.co/400x400/ffffff/e8e8e8?text=EG" alt="Profile picture" class="card-photo">
         </div>
         <div class="card-info">
-          <h1 class="card-name">[your name here]</h1>
-          <p class="card-title">[your title here]</p>
+          <h1 class="card-name">Your Name</h1>
+          <p class="card-title">Computer Science Student · Aspiring Software Engineer</p>
           <div class="card-contact">
-            <p class="card-phone">Ph: 555-555-5555</p>
-            <a href="mailto:youremailhere@email.com" class="card-email">youremailhere@email.com</a>
+            <p class="card-phone"><span class="card-contact-icon" aria-hidden="true">📞</span> 555-123-4567</p>
+            <a href="mailto:youremail@example.com" class="card-email"><span class="card-contact-icon" aria-hidden="true">✉</span> youremail@example.com</a>
           </div>
-          <div class="card-buttons">
-            <a href="#" class="card-link-highlight card-nav" data-section="personal">Personal Projects</a>
-            <a href="#" class="card-link-highlight card-nav" data-section="academic">Academic Projects</a>
-            <a href="#" class="card-link-highlight card-nav" data-section="about">About</a>
-            <a href="#" class="card-link-highlight card-nav" data-section="resume">Resume</a>
+          <div class="card-links-section">
+            <h3 class="card-block-heading">Links</h3>
+            <div class="card-links-grid">
+              <a href="#" class="card-link-btn card-nav" data-section="about">Portfolio</a>
+              <a href="#" class="card-link-btn card-nav" data-section="resume">Resume</a>
+              <a href="https://github.com/EthanJG2814-Creator" target="_blank" rel="noopener noreferrer" class="card-link-btn" aria-label="GitHub">GitHub</a>
+              <a href="https://www.linkedin.com/in/ethanguerrero2814/" target="_blank" rel="noopener noreferrer" class="card-link-btn" aria-label="LinkedIn">LinkedIn</a>
+            </div>
           </div>
-          <p class="card-links">
-            <a href="https://github.com/EthanJG2814-Creator" target="_blank" rel="noopener noreferrer" class="card-link-highlight" aria-label="GitHub">GitHub</a>
-            <span class="card-links-sep"> · </span>
-            <a href="https://www.linkedin.com/in/ethanguerrero2814/" target="_blank" rel="noopener noreferrer" class="card-link-highlight" aria-label="LinkedIn">LinkedIn</a>
-          </p>
         </div>
       </div>
 
       <!-- Expanded sections: only one visible when opened -->
       <div class="card-section card-section-about" id="card-section-about" aria-hidden="true">
-        <div class="card-section-header">
+        <div class="card-section-header card-section-header--tabs">
           <a href="#" class="card-back-btn card-back" data-back="main">← Back</a>
-          <h2 class="card-section-title">About</h2>
-        </div>
-        <div class="card-section-content card-section-content--scroll card-section-about-content">
-          <div class="about-photo-wrap">
-            <img src="https://placehold.co/400x400/ffffff/e8e8e8?text=PP" alt="Profile picture" class="about-photo">
+          <div class="about-tabs" role="tablist">
+            <button type="button" class="about-tab-btn about-tab-active" role="tab" aria-selected="true" data-about-tab="about">About</button>
+            <button type="button" class="about-tab-btn" role="tab" aria-selected="false" data-about-tab="personal">Personal Projects</button>
+            <button type="button" class="about-tab-btn" role="tab" aria-selected="false" data-about-tab="academic">Academic Projects</button>
           </div>
-          <div class="about-details">
-            <h3 class="card-subheading">Bio</h3>
-            <p class="card-section-text">Replace with a short bio about yourself.</p>
+        </div>
+        <div class="about-panels">
+          <div class="about-tab-panel" id="about-panel-about" role="tabpanel" aria-hidden="false">
+            <div class="card-section-content card-section-content--scroll card-section-about-content">
+              <div class="about-photo-wrap">
+                <img src="https://placehold.co/400x400/ffffff/e8e8e8?text=PP" alt="Profile picture" class="about-photo">
+              </div>
+              <div class="about-details">
+                <h3 class="card-subheading">Bio</h3>
+                <p class="card-section-text">Replace with a short bio about yourself.</p>
 
-            <h3 class="card-subheading">Education</h3>
-            <p class="card-section-text">Your degree, institution, and year (e.g. B.S. Biomedical Engineering, University Name, 2025).</p>
+                <h3 class="card-subheading">Education</h3>
+                <p class="card-section-text">Your degree, institution, and year (e.g. B.S. Biomedical Engineering, University Name, 2025).</p>
 
-            <h3 class="card-subheading">Certification</h3>
-            <p class="card-section-text">List certifications (e.g. CPR, OSHA, or leave as placeholder).</p>
+                <h3 class="card-subheading">Certification</h3>
+                <p class="card-section-text">List certifications (e.g. CPR, OSHA, or leave as placeholder).</p>
 
-            <h3 class="card-subheading">Interest</h3>
-            <ul class="about-list">
-              <li>Interest one (e.g. medical devices)</li>
-              <li>Interest two (e.g. computational biology)</li>
-              <li>Interest three</li>
-            </ul>
+                <h3 class="card-subheading">Interest</h3>
+                <ul class="about-list">
+                  <li>Interest one (e.g. medical devices)</li>
+                  <li>Interest two (e.g. computational biology)</li>
+                  <li>Interest three</li>
+                </ul>
 
-            <h3 class="card-subheading">Skills</h3>
-            <ul class="about-list about-list--skills">
-              <li>Skill one (e.g. Python)</li>
-              <li>Skill two (e.g. MATLAB)</li>
-              <li>Skill three (e.g. embedded systems)</li>
-            </ul>
+                <h3 class="card-subheading">Skills</h3>
+                <ul class="about-list about-list--skills">
+                  <li>Skill one (e.g. Python)</li>
+                  <li>Skill two (e.g. MATLAB)</li>
+                  <li>Skill three (e.g. embedded systems)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="about-tab-panel" id="about-panel-personal" role="tabpanel" aria-hidden="true">
+            <div class="card-section-content card-section-content--scroll">
+              <div class="project-block">
+                <h3 class="project-name">Project name</h3>
+                <p class="project-timeline">Project timeline (e.g. Jan 2024 – May 2024)</p>
+                <p class="project-blurb">Provide a 2-3 sentence description on what the project is about and why you joined it.</p>
+                <p class="project-description">Project description. Short summary of what you built and your role.</p>
+                <div class="project-figures">
+                  <figure class="project-figure">
+                    <figcaption>The What?</figcaption>
+                    <img src="./assets/project-the-what.png" alt="The What - project context" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence description on what the problem was.</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                  <figure class="project-figure">
+                    <figcaption>The How?</figcaption>
+                    <img src="./assets/project-the-how.png" alt="The How - process and method" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence description for how did you execute this?</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                  <figure class="project-figure">
+                    <figcaption>The Result?</figcaption>
+                    <img src="./assets/project-the-result.png" alt="The Result - outcome and achievement" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence statement of the result.</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                </div>
+              </div>
+              <div class="project-block">
+                <h3 class="project-name">Project name</h3>
+                <p class="project-timeline">Project timeline</p>
+                <p class="project-blurb">Provide a 2-3 sentence description on what the project is about and why you joined it.</p>
+                <p class="project-description">Project description.</p>
+                <div class="project-figures">
+                  <figure class="project-figure">
+                    <figcaption>The What?</figcaption>
+                    <img src="./assets/project-the-what.png" alt="The What - project context" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence description on what the problem was.</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                  <figure class="project-figure">
+                    <figcaption>The How?</figcaption>
+                    <img src="./assets/project-the-how.png" alt="The How - process and method" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence description for how did you execute this?</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                  <figure class="project-figure">
+                    <figcaption>The Result?</figcaption>
+                    <img src="./assets/project-the-result.png" alt="The Result - outcome and achievement" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence statement of the result.</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                </div>
+              </div>
+              <div class="project-block">
+                <h3 class="project-name">Project name</h3>
+                <p class="project-timeline">Project timeline</p>
+                <p class="project-blurb">Provide a 2-3 sentence description on what the project is about and why you joined it.</p>
+                <p class="project-description">Project description.</p>
+                <div class="project-figures">
+                  <figure class="project-figure">
+                    <figcaption>The What?</figcaption>
+                    <img src="./assets/project-the-what.png" alt="The What - project context" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence description on what the problem was.</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                  <figure class="project-figure">
+                    <figcaption>The How?</figcaption>
+                    <img src="./assets/project-the-how.png" alt="The How - process and method" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence description for how did you execute this?</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                  <figure class="project-figure">
+                    <figcaption>The Result?</figcaption>
+                    <img src="./assets/project-the-result.png" alt="The Result - outcome and achievement" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence statement of the result.</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="about-tab-panel" id="about-panel-academic" role="tabpanel" aria-hidden="true">
+            <div class="card-section-content card-section-content--scroll">
+              <div class="project-block">
+                <h3 class="project-name">Course or project name</h3>
+                <p class="project-timeline">Project timeline (e.g. Fall 2023)</p>
+                <p class="project-blurb">Provide a 2-3 sentence description on what the project is about and why you joined it.</p>
+                <p class="project-description">Short description and technologies used.</p>
+                <div class="project-figures">
+                  <figure class="project-figure">
+                    <figcaption>The What?</figcaption>
+                    <img src="./assets/project-the-what.png" alt="The What - project context" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence description on what the problem was.</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                  <figure class="project-figure">
+                    <figcaption>The How?</figcaption>
+                    <img src="./assets/project-the-how.png" alt="The How - process and method" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence description for how did you execute this?</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                  <figure class="project-figure">
+                    <figcaption>The Result?</figcaption>
+                    <img src="./assets/project-the-result.png" alt="The Result - outcome and achievement" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence statement of the result.</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                </div>
+              </div>
+              <div class="project-block">
+                <h3 class="project-name">Course or project name</h3>
+                <p class="project-timeline">Project timeline</p>
+                <p class="project-blurb">Provide a 2-3 sentence description on what the project is about and why you joined it.</p>
+                <p class="project-description">Short description and technologies used.</p>
+                <div class="project-figures">
+                  <figure class="project-figure">
+                    <figcaption>The What?</figcaption>
+                    <img src="./assets/project-the-what.png" alt="The What - project context" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence description on what the problem was.</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                  <figure class="project-figure">
+                    <figcaption>The How?</figcaption>
+                    <img src="./assets/project-the-how.png" alt="The How - process and method" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence description for how did you execute this?</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                  <figure class="project-figure">
+                    <figcaption>The Result?</figcaption>
+                    <img src="./assets/project-the-result.png" alt="The Result - outcome and achievement" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence statement of the result.</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                </div>
+              </div>
+              <div class="project-block">
+                <h3 class="project-name">Capstone / thesis</h3>
+                <p class="project-timeline">Project timeline</p>
+                <p class="project-blurb">Provide a 2-3 sentence description on what the project is about and why you joined it.</p>
+                <p class="project-description">Short description and outcomes.</p>
+                <div class="project-figures">
+                  <figure class="project-figure">
+                    <figcaption>The What?</figcaption>
+                    <img src="./assets/project-the-what.png" alt="The What - project context" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence description on what the problem was.</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                  <figure class="project-figure">
+                    <figcaption>The How?</figcaption>
+                    <img src="./assets/project-the-how.png" alt="The How - process and method" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence description for how did you execute this?</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                  <figure class="project-figure">
+                    <figcaption>The Result?</figcaption>
+                    <img src="./assets/project-the-result.png" alt="The Result - outcome and achievement" />
+                    <p class="project-figure-caption">Provide a 2-3 sentence statement of the result.</p>
+                    <p class="project-figure-skills-heading">Skills developed</p>
+                    <ul class="project-figure-skills" aria-label="Skills gained">
+                      <li>Skill one</li><li>Skill two</li><li>Skill three</li>
+                    </ul>
+                  </figure>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -118,158 +345,22 @@
           <h2 class="card-section-title">Resume</h2>
         </div>
         <div class="card-section-content card-section-content--scroll">
-          <div class="resume-block">
-            <h3 class="card-subheading">Experience</h3>
-            <p class="resume-item"><strong>Role Title</strong> — Company Name</p>
-            <p class="resume-meta">Date range (e.g. Summer 2024)</p>
-            <p class="card-section-text">Brief description of responsibilities and achievements.</p>
+          <div class="resume-pdf-actions">
+            <a href="./assets/resume.pdf" download="Ethan_Guerrero_Resume.pdf" class="resume-download-btn">Download PDF</a>
           </div>
-          <div class="resume-block">
-            <h3 class="card-subheading">Education</h3>
-            <p class="resume-item"><strong>Degree</strong> — Institution</p>
-            <p class="resume-meta">Year or date range</p>
-          </div>
-          <div class="resume-block">
-            <h3 class="card-subheading">Skills</h3>
-            <p class="card-section-text">List key skills (e.g. Python, MATLAB, CAD, signal processing).</p>
+          <div class="resume-pdf-wrap">
+            <iframe src="./assets/resume.pdf#view=FitH" class="resume-pdf-iframe" title="Resume PDF"></iframe>
           </div>
         </div>
       </div>
-
-      <div class="card-section card-section-personal" id="card-section-personal" aria-hidden="true">
-        <div class="card-section-header">
-          <a href="#" class="card-back-btn card-back" data-back="main">← Back</a>
-          <h2 class="card-section-title">Personal Projects</h2>
         </div>
-        <div class="card-section-content card-section-content--scroll">
-          <div class="project-block">
-            <h3 class="project-name">Project name</h3>
-            <p class="project-timeline">Project timeline (e.g. Jan 2024 – May 2024)</p>
-            <p class="project-description">Project description. Short summary of what you built and your role.</p>
-            <div class="project-figures">
-              <figure class="project-figure">
-                <figcaption>The What?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+What" alt="The What - add your image" />
-              </figure>
-              <figure class="project-figure">
-                <figcaption>The How?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+How" alt="The How - add your image" />
-              </figure>
-              <figure class="project-figure">
-                <figcaption>The Result?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+Result" alt="The Result - add your image" />
-              </figure>
-            </div>
-          </div>
-          <div class="project-block">
-            <h3 class="project-name">Project name</h3>
-            <p class="project-timeline">Project timeline</p>
-            <p class="project-description">Project description.</p>
-            <div class="project-figures">
-              <figure class="project-figure">
-                <figcaption>The What?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+What" alt="The What - add your image" />
-              </figure>
-              <figure class="project-figure">
-                <figcaption>The How?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+How" alt="The How - add your image" />
-              </figure>
-              <figure class="project-figure">
-                <figcaption>The Result?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+Result" alt="The Result - add your image" />
-              </figure>
-            </div>
-          </div>
-          <div class="project-block">
-            <h3 class="project-name">Project name</h3>
-            <p class="project-timeline">Project timeline</p>
-            <p class="project-description">Project description.</p>
-            <div class="project-figures">
-              <figure class="project-figure">
-                <figcaption>The What?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+What" alt="The What - add your image" />
-              </figure>
-              <figure class="project-figure">
-                <figcaption>The How?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+How" alt="The How - add your image" />
-              </figure>
-              <figure class="project-figure">
-                <figcaption>The Result?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+Result" alt="The Result - add your image" />
-              </figure>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card-section card-section-academic" id="card-section-academic" aria-hidden="true">
-        <div class="card-section-header">
-          <a href="#" class="card-back-btn card-back" data-back="main">← Back</a>
-          <h2 class="card-section-title">Academic Projects</h2>
-        </div>
-        <div class="card-section-content card-section-content--scroll">
-          <div class="project-block">
-            <h3 class="project-name">Course or project name</h3>
-            <p class="project-timeline">Project timeline (e.g. Fall 2023)</p>
-            <p class="project-description">Short description and technologies used.</p>
-            <div class="project-figures">
-              <figure class="project-figure">
-                <figcaption>The What?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+What" alt="The What - add your image" />
-              </figure>
-              <figure class="project-figure">
-                <figcaption>The How?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+How" alt="The How - add your image" />
-              </figure>
-              <figure class="project-figure">
-                <figcaption>The Result?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+Result" alt="The Result - add your image" />
-              </figure>
-            </div>
-          </div>
-          <div class="project-block">
-            <h3 class="project-name">Course or project name</h3>
-            <p class="project-timeline">Project timeline</p>
-            <p class="project-description">Short description and technologies used.</p>
-            <div class="project-figures">
-              <figure class="project-figure">
-                <figcaption>The What?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+What" alt="The What - add your image" />
-              </figure>
-              <figure class="project-figure">
-                <figcaption>The How?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+How" alt="The How - add your image" />
-              </figure>
-              <figure class="project-figure">
-                <figcaption>The Result?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+Result" alt="The Result - add your image" />
-              </figure>
-            </div>
-          </div>
-          <div class="project-block">
-            <h3 class="project-name">Capstone / thesis</h3>
-            <p class="project-timeline">Project timeline</p>
-            <p class="project-description">Short description and outcomes.</p>
-            <div class="project-figures">
-              <figure class="project-figure">
-                <figcaption>The What?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+What" alt="The What - add your image" />
-              </figure>
-              <figure class="project-figure">
-                <figcaption>The How?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+How" alt="The How - add your image" />
-              </figure>
-              <figure class="project-figure">
-                <figcaption>The Result?</figcaption>
-                <img src="https://placehold.co/320x180/e8e8e8/999?text=The+Result" alt="The Result - add your image" />
-              </figure>
-            </div>
-          </div>
+        <div class="card-face card-face-back">
+          <p class="card-back-quote">Insert quote here</p>
         </div>
       </div>
     </div>
   </div>
 
-  <script src="js/script.js"></script>
+  <script src="./js/script.js"></script>
 </body>
 </html>

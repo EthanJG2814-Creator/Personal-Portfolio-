@@ -52,6 +52,22 @@
 })();
 
 /**
+ * Easter egg: click top-right corner of card to flip to back (quote side).
+ * Only active on the main card view (not when a section is expanded).
+ */
+(function () {
+  'use strict';
+  var card = document.getElementById('card');
+  var trigger = document.querySelector('.card-easter-egg');
+  if (!card || !trigger) return;
+  trigger.addEventListener('click', function (e) {
+    e.preventDefault();
+    if (card.classList.contains('card-expanded')) return;
+    card.classList.toggle('card-flipped');
+  });
+})();
+
+/**
  * Card sections: Personal Projects, Academic Projects, About.
  * Click a nav button -> card expands, only that section title + sub-headings show.
  * Click the section title -> back to main card.
@@ -63,13 +79,16 @@
   var cardMain = document.getElementById('card-main');
   var navButtons = document.querySelectorAll('.card-nav[data-section]');
   var backButtons = document.querySelectorAll('.card-back[data-back="main"]');
-  var sectionIds = { about: 'card-section-about', personal: 'card-section-personal', academic: 'card-section-academic', resume: 'card-section-resume' };
+  var sectionIds = { about: 'card-section-about', resume: 'card-section-resume' };
 
   function showMain() {
     if (cardEl) cardEl.classList.remove('card-expanded');
     if (cardMain) cardMain.style.display = '';
     document.querySelectorAll('.card-section').forEach(function (section) {
       section.setAttribute('aria-hidden', 'true');
+    });
+    document.querySelectorAll('.card-nav').forEach(function (btn) {
+      btn.classList.remove('card-nav-active');
     });
   }
 
@@ -78,10 +97,33 @@
     if (!id) return;
     var section = document.getElementById(id);
     if (!section) return;
-    if (cardEl) cardEl.classList.add('card-expanded');
+    if (cardEl) {
+      cardEl.classList.add('card-expanded');
+      cardEl.classList.remove('card-flipped');
+    }
     if (cardMain) cardMain.style.display = 'none';
     document.querySelectorAll('.card-section').forEach(function (s) {
       s.setAttribute('aria-hidden', s === section ? 'false' : 'true');
+    });
+    document.querySelectorAll('.card-nav').forEach(function (btn) {
+      btn.classList.toggle('card-nav-active', btn.getAttribute('data-section') === sectionKey);
+    });
+    if (id === 'card-section-about') {
+      setAboutTab('about');
+    }
+  }
+
+  function setAboutTab(tab) {
+    var tabs = document.querySelectorAll('.about-tab-btn');
+    var panels = document.querySelectorAll('.about-tab-panel');
+    tabs.forEach(function (btn) {
+      var t = btn.getAttribute('data-about-tab');
+      btn.classList.toggle('about-tab-active', t === tab);
+      btn.setAttribute('aria-selected', t === tab ? 'true' : 'false');
+    });
+    panels.forEach(function (panel) {
+      var panelTab = panel.id.replace('about-panel-', '');
+      panel.setAttribute('aria-hidden', panelTab === tab ? 'false' : 'true');
     });
   }
 
@@ -97,6 +139,16 @@
     btn.addEventListener('click', function (e) {
       e.preventDefault();
       showMain();
+    });
+  });
+
+  /* About section tabs: About | Personal Projects | Academic Projects */
+  var aboutTabBtns = document.querySelectorAll('.about-tab-btn');
+  aboutTabBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var tab = btn.getAttribute('data-about-tab');
+      if (!tab) return;
+      setAboutTab(tab);
     });
   });
 })();
