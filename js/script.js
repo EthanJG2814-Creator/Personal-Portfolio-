@@ -52,6 +52,22 @@
 })();
 
 /**
+ * Resume PDF iframe: #view=FitH fits width and often crops badly on phones; use plain PDF on narrow viewports.
+ */
+(function () {
+  'use strict';
+  var iframe = document.querySelector('.resume-pdf-iframe');
+  if (!iframe) return;
+  var base = './assets/resume.pdf';
+  function syncResumePdfSrc() {
+    var narrow = window.matchMedia('(max-width: 768px)').matches;
+    iframe.setAttribute('src', narrow ? base : base + '#view=FitH');
+  }
+  syncResumePdfSrc();
+  window.addEventListener('resize', syncResumePdfSrc);
+})();
+
+/**
  * Easter egg: click top-right corner of card to flip to back (quote side).
  * Only active on the main card view (not when a section is expanded).
  */
